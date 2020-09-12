@@ -1,4 +1,4 @@
-import { SetupError } from "../error/SetupError";
+import { SetupError } from "../../error/SetupError";
 //
 import knex from "knex";
 

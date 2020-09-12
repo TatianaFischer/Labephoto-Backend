@@ -29,12 +29,9 @@ export class User {
   }
   //
   public static toUserModel(user?: any): User | undefined {
-    return new User(
-      user.id,
-      user.name,
-      user.email,
-      user.nickname,
-      user.password
+    return (
+      user &&
+      new User(user.id, user.name, user.email, user.nickname, user.password)
     );
   }
 }
