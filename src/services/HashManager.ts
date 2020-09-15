@@ -1,7 +1,7 @@
 import * as bcryptjs from "bcryptjs";
 import { SetupError } from "../error/SetupError";
 
-export class Cypher {
+export class HashManager {
   private cost(): number {
     if (!process.env.BCRYPT_COST) {
       throw new SetupError(
