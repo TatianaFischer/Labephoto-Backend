@@ -21,23 +21,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Authenticator = void 0;
 const jwt = __importStar(require("jsonwebtoken"));
-const SetupError_1 = require("../error/SetupError");
+// import { SetupError } from "../error/SetupError";
 class Authenticator {
-    secretKey() {
-        if (!process.env.JWT_SECRET_KEY) {
-            throw new SetupError_1.SetupError("Missing authorization secret key. Did you remember to create .env file?");
-        }
-        return process.env.JWT_SECRET_KEY;
-    }
-    generateToken(dataInput) {
-        return jwt.sign(dataInput, this.secretKey());
-    }
     verifyToken(token) {
-        const payload = jwt.verify(token, this.secretKey());
-        const result = {
-            id: payload.id,
+        const data = jwt.verify(token, process.env.JWT_KEY);
+        return {
+            id: data.id,
         };
-        return result;
+    }
+    generateToken(dataInput, expiresIn = process.env.ACCESS_TOKEN_EXPIRES_IN) {
+        const token = jwt.sign({
+            id: dataInput.id,
+        }, process.env.JWT_KEY, {
+            expiresIn,
+        });
+        return token;
     }
 }
 exports.Authenticator = Authenticator;

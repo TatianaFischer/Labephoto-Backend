@@ -27,11 +27,27 @@ export class User {
   public getPassword() {
     return this.password;
   }
-  //
-  public static toUserModel(user?: any): User | undefined {
-    return (
-      user &&
-      new User(user.id, user.name, user.email, user.nickname, user.password)
+
+  public static toUserModel(user: UserInputDTO): User {
+    return new User(
+      user.id,
+      user.name,
+      user.email,
+      user.nickname,
+      user.password
     );
   }
 }
+
+export interface UserInputDTO {
+  id: string;
+  name: string;
+  email: string;
+  nickname: string;
+  password: string;
+}
+
+// export interface LoginInputDTO {
+//   email: string;
+//   password: string;
+// }

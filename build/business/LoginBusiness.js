@@ -9,21 +9,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SignupBusiness = void 0;
-const User_1 = require("../model/User");
-class SignupBusiness {
-    constructor(userDatabase, hashManager, idGenerator) {
+exports.LoginBusiness = void 0;
+const NotFoundError_1 = require("../error/NotFoundError");
+const Authenticator_1 = require("../services/Authenticator");
+class LoginBusiness {
+    constructor(userDatabase, hashManager) {
         this.userDatabase = userDatabase;
         this.hashManager = hashManager;
-        this.idGenerator = idGenerator;
     }
     execute(input) {
         return __awaiter(this, void 0, void 0, function* () {
-            const hashPassword = yield this.hashManager.hash(input.password);
-            const id = this.idGenerator.generate();
-            yield this.userDatabase.createUser(new User_1.User(id, input.name, input.email, input.nickname, hashPassword));
-            return id;
+            if (!input) {
+                throw new Error("Missing datas");
+            }
+            const user = yield this.userDatabase.getUserByEmail(input.email);
+            console.log(user);
+            const isPasswordRight = yield this.hashManager.compare(input.password, user.getPassword());
+            if (!isPasswordRight) {
+                throw new NotFoundError_1.NotFoundError("Invalid credentials");
+            }
+            const id = user.getId();
+            const token = new Authenticator_1.Authenticator().generateToken({ id });
+            return token;
         });
     }
 }
-exports.SignupBusiness = SignupBusiness;
+exports.LoginBusiness = LoginBusiness;

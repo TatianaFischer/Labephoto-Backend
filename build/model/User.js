@@ -25,10 +25,12 @@ class User {
     getPassword() {
         return this.password;
     }
-    //
     static toUserModel(user) {
-        return (user &&
-            new User(user.id, user.name, user.email, user.nickname, user.password));
+        return new User(user.id, user.name, user.email, user.nickname, user.password);
     }
 }
 exports.User = User;
+// export interface LoginInputDTO {
+//   email: string;
+//   password: string;
+// }

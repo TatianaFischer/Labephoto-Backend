@@ -13,17 +13,17 @@ exports.UserController = void 0;
 const BaseDatabase_1 = require("../data/base/BaseDatabase");
 const SignupBusiness_1 = require("../business/SignupBusiness");
 const UserDatabase_1 = require("../data/UserDatabase");
-const Cypher_1 = require("../services/Cypher");
 const IdGenerator_1 = require("../services/IdGenerator");
 const InvalidInputError_1 = require("../error/InvalidInputError");
 const Authenticator_1 = require("../services/Authenticator");
+const LoginBusiness_1 = require("../business/LoginBusiness");
+const HashManager_1 = require("../services/HashManager");
 //
-// import { LoginBusiness } from "../business/LoginBusiness";
 class UserController {
     constructor() {
         this.signup = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const signupBusiness = new SignupBusiness_1.SignupBusiness(new UserDatabase_1.UserDatabase(), new Cypher_1.Cypher(), new IdGenerator_1.IdGenerator());
+                const signupBusiness = new SignupBusiness_1.SignupBusiness(new UserDatabase_1.UserDatabase(), new HashManager_1.HashManager(), new IdGenerator_1.IdGenerator());
                 const input = {
                     name: req.body.name,
                     email: req.body.email,
@@ -39,9 +39,32 @@ class UserController {
                 const user = yield signupBusiness.execute(input);
                 const authenticator = new Authenticator_1.Authenticator();
                 const token = authenticator.generateToken({
-                    id: user.getId(),
+                    id: user,
                 });
                 res.status(200).send({ token });
+                return token;
+            }
+            catch (err) {
+                res.status(err.customErrorCode || 400).send({
+                    message: err.message,
+                });
+            }
+            finally {
+                yield BaseDatabase_1.BaseDatabase.destroyConnection();
+            }
+        });
+        this.login = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const loginBusiness = new LoginBusiness_1.LoginBusiness(new UserDatabase_1.UserDatabase(), new HashManager_1.HashManager());
+                const input = {
+                    email: req.body.email,
+                    password: req.body.password,
+                };
+                const userLogin = yield loginBusiness.execute(input);
+                if (!input.email || !input.password) {
+                    throw new InvalidInputError_1.InvalidInputError("Missing data");
+                }
+                res.status(200).send({ message: "Sucess!:", userLogin });
             }
             catch (err) {
                 res.status(err.customErrorCode || 400).send({
