@@ -30,7 +30,9 @@ export class ImageDatabase extends BaseDatabase {
     return images;
   }
 
-  public async getAllImagesByAuthor(author): Promise<Image[] | undefined> {
+  public async getAllImagesByAuthor(
+    author: string
+  ): Promise<Image[] | undefined> {
     const imagesByAuthor = await this.getConnection()
       .select("*")
       .from(this.tableNames.images)
