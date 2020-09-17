@@ -21,6 +21,8 @@ class BaseDatabase {
         this.tableNames = {
             users: "Users_img",
             images: "Images_img",
+            tags: "Images_tag",
+            imageWithTagsId: "Images_img_tag",
         };
     }
     validateSetupData() {
