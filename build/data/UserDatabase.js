@@ -13,14 +13,13 @@ exports.UserDatabase = void 0;
 const BaseDatabase_1 = require("./base/BaseDatabase");
 const User_1 = require("../model/User");
 class UserDatabase extends BaseDatabase_1.BaseDatabase {
-    getUserByEmail(emailOrNick) {
+    getUserByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield this.getConnection()
                 .select("*")
                 .from(this.tableNames.users)
-                .where({ email: emailOrNick })
-                .or.where({ nickname: emailOrNick });
-            // console.log(user[0]);
+                .where({ email });
+            console.log(user[0]);
             return User_1.User.toUserModel(user[0]);
         });
     }

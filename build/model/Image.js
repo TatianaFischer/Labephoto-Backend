@@ -1,14 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Image = void 0;
+exports.Image = exports.ImageTagsName = void 0;
+var ImageTagsName;
+(function (ImageTagsName) {
+    ImageTagsName["OLEO"] = "#\u00D3LEO";
+    ImageTagsName["AQUARELA"] = "#AQUARELA";
+    ImageTagsName["PASTEL"] = "#PASTEL";
+    ImageTagsName["ACRILICA"] = "#ACR\u00CDLICA";
+    ImageTagsName["AREIA"] = "#AREIA";
+    ImageTagsName["DIGITAL"] = "#DIGITAL";
+    ImageTagsName["OCIDENTAL"] = "#OCIDENTAL";
+    ImageTagsName["ORIENTAL"] = "#ORIENTAL";
+})(ImageTagsName = exports.ImageTagsName || (exports.ImageTagsName = {}));
 class Image {
-    constructor(id, subtitle, author, createdDate, file, collection) {
+    constructor(id, subtitle, author, createdDate, file, collection, userId) {
         this.id = id;
         this.subtitle = subtitle;
         this.author = author;
         this.createdDate = createdDate;
         this.file = file;
         this.collection = collection;
+        this.userId = userId;
     }
     //
     getId() {
@@ -30,17 +42,7 @@ class Image {
         return this.collection;
     }
     static toImageModel(image) {
-        return new Image(image.id, image.subtitle, image.author, image.createdDate, image.file, image.collection);
+        return new Image(image.id, image.subtitle, image.author, image.createdDate, image.file, image.collection, image.userId);
     }
 }
 exports.Image = Image;
-// export enum ImageTagsType {
-//   OLEO = "#ÓLEO",
-//   AQUARELA = "#AQUARELA",
-//   PASTEL = "#PASTEL",
-//   ACRILICA = "#ACRÍLICA",
-//   AREIA = "#AREIA",
-//   DIGITAL = "#DIGITAL",
-//   OCIDENTAL = "#OCIDENTAL",
-//   ORIENTAL = "#ORIENTAL"
-// }
