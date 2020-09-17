@@ -1,9 +1,32 @@
+export interface ImageInputDTO {
+  subtitle: string;
+  author: string;
+  createdDate: Date;
+  file: string;
+  collection: string;
+}
+
+export interface TagsInputDTO {
+  id: string;
+  name: ImageTagsName;
+}
+export enum ImageTagsName {
+  OLEO = "#ÓLEO",
+  AQUARELA = "#AQUARELA",
+  PASTEL = "#PASTEL",
+  ACRILICA = "#ACRÍLICA",
+  AREIA = "#AREIA",
+  DIGITAL = "#DIGITAL",
+  OCIDENTAL = "#OCIDENTAL",
+  ORIENTAL = "#ORIENTAL",
+}
+
 export class Image {
   constructor(
     private id: string,
     private subtitle: string,
     private author: string,
-    private createdDate: string,
+    private createdDate: Date,
     private file: string,
     private collection: string
   ) {}
@@ -32,7 +55,7 @@ export class Image {
     return this.collection;
   }
 
-  public static toImageModel(image: ImageInputDTO): Image {
+  public static toImageModel(image: any): Image {
     return new Image(
       image.id,
       image.subtitle,
@@ -43,23 +66,3 @@ export class Image {
     );
   }
 }
-
-export interface ImageInputDTO {
-  id: string;
-  subtitle: string;
-  author: string;
-  createdDate: string;
-  file: string;
-  collection: string;
-}
-
-// export enum ImageTagsType {
-//   OLEO = "#ÓLEO",
-//   AQUARELA = "#AQUARELA",
-//   PASTEL = "#PASTEL",
-//   ACRILICA = "#ACRÍLICA",
-//   AREIA = "#AREIA",
-//   DIGITAL = "#DIGITAL",
-//   OCIDENTAL = "#OCIDENTAL",
-//   ORIENTAL = "#ORIENTAL"
-// }
