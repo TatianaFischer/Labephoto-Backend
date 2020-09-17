@@ -13,22 +13,15 @@ exports.UserDatabase = void 0;
 const BaseDatabase_1 = require("./base/BaseDatabase");
 const User_1 = require("../model/User");
 class UserDatabase extends BaseDatabase_1.BaseDatabase {
-    getUserByEmail(email) {
+    getUserByEmailOrNick(email, nickname) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield this.getConnection()
                 .select("*")
                 .from(this.tableNames.users)
                 .where({ email });
-            console.log(user[0]);
             return User_1.User.toUserModel(user[0]);
         });
     }
-    // public async getUserByNickname(nickname: string): Promise<User | undefined> {
-    //   const user = await this.getConnection()
-    //     .select("*")
-    //     .from(this.tableNames.users);
-    //   return User.toUserModel(user[0]);
-    // }
     createUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.getConnection()

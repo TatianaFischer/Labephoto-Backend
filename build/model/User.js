@@ -30,7 +30,3 @@ class User {
     }
 }
 exports.User = User;
-// export interface LoginInputDTO {
-//   email: string;
-//   password: string;
-// }

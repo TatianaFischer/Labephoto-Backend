@@ -1,3 +1,16 @@
+export interface UserInputDTO {
+  name: string;
+  email: string;
+  nickname: string;
+  password: string;
+}
+
+export interface LoginInputDTO {
+  email?: string;
+  nickname?: string;
+  password: string;
+}
+
 export class User {
   constructor(
     private id: string,
@@ -28,7 +41,7 @@ export class User {
     return this.password;
   }
 
-  public static toUserModel(user: UserInputDTO): User {
+  public static toUserModel(user: any): User {
     return new User(
       user.id,
       user.name,
@@ -38,16 +51,3 @@ export class User {
     );
   }
 }
-
-export interface UserInputDTO {
-  id: string;
-  name: string;
-  email: string;
-  nickname: string;
-  password: string;
-}
-
-// export interface LoginInputDTO {
-//   email: string;
-//   password: string;
-// }

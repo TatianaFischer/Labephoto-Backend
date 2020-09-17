@@ -15,7 +15,7 @@ export class LoginBusiness {
       throw new Error("Missing datas");
     }
 
-    const user = await this.userDatabase.getUserByEmail(input.email);
+    const user = await this.userDatabase.getUserByEmailOrNick(input.email);
     console.log(user);
 
     const isPasswordRight = await this.hashManager.compare(
