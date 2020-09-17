@@ -32,7 +32,7 @@ class ImageController {
                 const token = req.headers.authorization;
                 const newImage = yield createImageBusiness.execute(input, tag, token);
                 res.status(200).send({ token });
-                return token;
+                // return token;
             }
             catch (err) {
                 res.status(err.customErrorCode || 400).send({

@@ -22,7 +22,7 @@ class LoginBusiness {
             if (!input) {
                 throw new Error("Missing datas");
             }
-            const user = yield this.userDatabase.getUserByEmail(input.email);
+            const user = yield this.userDatabase.getUserByEmailOrNick(input.email);
             console.log(user);
             const isPasswordRight = yield this.hashManager.compare(input.password, user.getPassword());
             if (!isPasswordRight) {
