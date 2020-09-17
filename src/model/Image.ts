@@ -28,7 +28,8 @@ export class Image {
     private author: string,
     private createdDate: Date,
     private file: string,
-    private collection: string
+    private collection: string,
+    private userId: string
   ) {}
 
   //
@@ -62,7 +63,8 @@ export class Image {
       image.author,
       image.createdDate,
       image.file,
-      image.collection
+      image.collection,
+      image.userId
     );
   }
 }
