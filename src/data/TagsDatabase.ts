@@ -2,7 +2,7 @@ import { BaseDatabase } from "./base/BaseDatabase";
 import { Image } from "../model/Image";
 
 export class TagsDatabase extends BaseDatabase {
-  public async getTagsById(name: string): Promise<Image> {
+  public async getTagsById(name: string): Promise<any> {
     try {
       const tags = await this.getConnection()
         .select("id")
