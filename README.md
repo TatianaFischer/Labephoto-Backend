@@ -1,4 +1,4 @@
-# ART-GALLERY-Backend
+# LABEPHOTO-Backend
 Gerenciador de imagens de quadros de artistas
 
 #MODELAGEM MYSQL
