@@ -19,21 +19,16 @@ export class ImageController {
 
       const input: ImageInputDTO = {
         subtitle: req.body.subtitle,
-
-        createdDate: req.body.createdDate,
+        date: req.body.date,
         file: req.body.file,
         collection: req.body.collection,
       };
-      // console.log(input); ////////////
 
       const tag = req.body.tag;
-      // console.log(tag); /////////////
 
       const token = req.headers.authorization as string;
-      // console.log(token); /////////////
 
       const result = await createImageBusiness.execute(input, tag, token);
-      // console.log(result); //////////////
 
       res.status(200).send("Image created successfully");
     } catch (err) {

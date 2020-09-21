@@ -1,6 +1,6 @@
 export interface ImageInputDTO {
   subtitle: string;
-  createdDate: Date;
+  date: Date;
   file: string;
   collection: string;
 }
@@ -25,7 +25,7 @@ export class Image {
     private id: string,
     private subtitle: string,
     private author: string,
-    private createdDate: Date,
+    private date: Date,
     private file: string,
     private collection: string
   ) {}
@@ -43,8 +43,8 @@ export class Image {
     return this.author;
   }
 
-  public getCreatedDate() {
-    return this.createdDate;
+  public getDate() {
+    return this.date;
   }
 
   public getfile() {
@@ -59,7 +59,7 @@ export class Image {
       image.id,
       image.subtitle,
       image.author,
-      image.createdDate,
+      image.date,
       image.file,
       image.collection
     );

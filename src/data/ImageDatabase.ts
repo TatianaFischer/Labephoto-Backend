@@ -10,12 +10,11 @@ export class ImageDatabase extends BaseDatabase {
           id: image.getId(),
           subtitle: image.getSubtitle(),
           author: image.getAuthor(),
-          createdDate: image.getCreatedDate(),
+          date: image.getDate(),
           file: image.getfile(),
           collection: image.getCollection(),
         })
         .into(this.tableNames.images);
-      console.log("image"); ///////
     } catch (err) {
       throw new Error(err.sqlMessage || err.message);
     }
