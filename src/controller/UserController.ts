@@ -66,14 +66,14 @@ export class UserController {
         email: req.body.email,
         password: req.body.password,
       };
-
-      const userLogin = await loginBusiness.execute(input);
+      console.log(input); /////////
+      const token = await loginBusiness.execute(input);
 
       if (!input.email || !input.password) {
         throw new InvalidInputError("Missing data");
       }
 
-      res.status(200).send({ message: "Sucess!:", userLogin });
+      res.status(200).send({ message: "Sucess!:", token });
     } catch (err) {
       res.status(err.customErrorCode || 400).send({
         message: err.message,

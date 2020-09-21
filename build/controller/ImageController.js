@@ -23,19 +23,21 @@ class ImageController {
                 const createImageBusiness = new CreateImageBusiness_1.CreateImageBusiness(new ImageDatabase_1.ImageDatabase(), new TagsDatabase_1.TagsDatabase(), new IdGenerator_1.IdGenerator(), new Authenticator_1.Authenticator());
                 const input = {
                     subtitle: req.body.subtitle,
-                    author: req.body.author,
                     createdDate: req.body.createdDate,
                     file: req.body.file,
                     collection: req.body.collection,
                 };
+                // console.log(input); ////////////
                 const tag = req.body.tag;
+                // console.log(tag); /////////////
                 const token = req.headers.authorization;
-                const newImage = yield createImageBusiness.execute(input, tag, token);
-                res.status(200).send({ token });
-                // return token;
+                // console.log(token); /////////////
+                const result = yield createImageBusiness.execute(input, tag, token);
+                // console.log(result); //////////////
+                res.status(200).send("Image created successfully");
             }
             catch (err) {
-                res.status(err.customErrorCode || 400).send({
+                res.status(err.erroCode || 400).send({
                     message: err.message,
                 });
             }

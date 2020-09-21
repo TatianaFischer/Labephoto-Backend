@@ -20,7 +20,7 @@ class TagsDatabase extends BaseDatabase_1.BaseDatabase {
                     .select("id")
                     .from(this.tableNames.tags)
                     .where({ name });
-                //   console.log(tags[0]);
+                console.log(tags[0]);
                 return Image_1.Image.toImageModel(tags[0].id);
             }
             catch (err) {
