@@ -22,7 +22,7 @@ export class CreateImageBusiness {
   ) {
     if (
       !imgInputDatas.subtitle ||
-      !imgInputDatas.createdDate ||
+      !imgInputDatas.date ||
       !imgInputDatas.file ||
       !imgInputDatas.collection
     ) {
@@ -52,13 +52,12 @@ export class CreateImageBusiness {
         imageId,
         imgInputDatas.subtitle,
         verifyToken.id,
-        imgInputDatas.createdDate,
+        imgInputDatas.date,
         imgInputDatas.file,
         imgInputDatas.collection
       )
     );
 
     await this.tagsDatabase.insertTagsToImage(imageId, tagId);
-    // console.log(imageTagsName, token, imgInputDatas); //////////////
   }
 }

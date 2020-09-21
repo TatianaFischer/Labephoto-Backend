@@ -23,7 +23,7 @@ exports.Authenticator = void 0;
 const jwt = __importStar(require("jsonwebtoken"));
 // import { SetupError } from "../error/SetupError";
 class Authenticator {
-    generateToken(dataInput, expiresIn = process.env.ACCESS_TOKEN_EXPIRES_IN) {
+    generateToken(dataInput, expiresIn = "2d") {
         const token = jwt.sign({
             id: dataInput.id,
         }, process.env.JWT_KEY, {

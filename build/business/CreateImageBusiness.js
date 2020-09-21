@@ -36,15 +36,16 @@ class CreateImageBusiness {
             if (!verifyToken.id) {
                 throw new InvalidInputError_1.InvalidInputError("Invalid Id");
             }
-            // console.log(verifyToken.id); ///////////////////////////
-            const tagId = yield this.tagsDatabase.getTagsById(imageTagsName);
+            console.log("Business", verifyToken.id); ///////////////////////////
+            const tagId = yield this.tagsDatabase.getTagsIdByName(imageTagsName);
+            console.log("tagId"); ////////
             if (!tagId) {
                 throw new InvalidInputError_1.InvalidInputError("Invalid Tag");
             }
             const imageId = this.idGenerator.generate();
             yield this.imageDatabase.createImg(new Image_1.Image(imageId, imgInputDatas.subtitle, verifyToken.id, imgInputDatas.createdDate, imgInputDatas.file, imgInputDatas.collection));
             yield this.tagsDatabase.insertTagsToImage(imageId, tagId);
-            // console.log(imageTagsName, token, imgInputDatas);//////////////
+            // console.log(imageTagsName, token, imgInputDatas); //////////////
         });
     }
 }

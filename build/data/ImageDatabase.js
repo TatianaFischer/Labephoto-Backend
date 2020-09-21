@@ -25,6 +25,7 @@ class ImageDatabase extends BaseDatabase_1.BaseDatabase {
                     collection: image.getCollection(),
                 })
                     .into(this.tableNames.images);
+                console.log("image"); ///////
             }
             catch (err) {
                 throw new Error(err.sqlMessage || err.message);
