@@ -4,8 +4,6 @@ import { ImageDatabase } from "../data/ImageDatabase";
 import { TagsDatabase } from "../data/TagsDatabase";
 import { IdGenerator } from "../services/IdGenerator";
 import { Authenticator } from "../services/Authenticator";
-import { HashManager } from "../services/HashManager";
-import { InvalidInputError } from "../error/InvalidInputError";
 import { CreateImageBusiness } from "../business/CreateImageBusiness";
 import { ImageInputDTO } from "../model/Image";
 
@@ -21,22 +19,25 @@ export class ImageController {
 
       const input: ImageInputDTO = {
         subtitle: req.body.subtitle,
-        author: req.body.author,
+
         createdDate: req.body.createdDate,
         file: req.body.file,
         collection: req.body.collection,
       };
+      // console.log(input); ////////////
 
       const tag = req.body.tag;
+      // console.log(tag); /////////////
+
       const token = req.headers.authorization as string;
+      // console.log(token); /////////////
 
-      const newImage = await createImageBusiness.execute(input, tag, token);
+      const result = await createImageBusiness.execute(input, tag, token);
+      // console.log(result); //////////////
 
-      res.status(200).send({ token });
-
-      // return token;
+      res.status(200).send("Image created successfully");
     } catch (err) {
-      res.status(err.customErrorCode || 400).send({
+      res.status(err.erroCode || 400).send({
         message: err.message,
       });
     } finally {

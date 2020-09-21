@@ -17,14 +17,14 @@ export class CreateImageBusiness {
 
   public async execute(
     imgInputDatas: ImageInputDTO,
-    imageTagsName: string,
+    imageTagsName: string[],
     token: string
   ) {
     if (
       !imgInputDatas.subtitle ||
-      !imgInputDatas.author ||
+      !imgInputDatas.createdDate ||
       !imgInputDatas.file ||
-      imgInputDatas.collection
+      !imgInputDatas.collection
     ) {
       throw new InvalidInputError("Missing datas");
     }
@@ -33,14 +33,15 @@ export class CreateImageBusiness {
       throw new SetupError("Invalid token");
     }
 
-    const verifyToken = this.authenticator.verifyToken(token);
-
+    const verifyToken = await this.authenticator.verifyToken(token);
+    console.log("teste");
     if (!verifyToken.id) {
-      throw new InvalidInputError("Invalid Token");
+      throw new InvalidInputError("Invalid Id");
     }
+    console.log("Business", verifyToken.id); ///////////////////////////
 
-    const tagId = await this.tagsDatabase.getTagsById(imageTagsName);
-
+    const tagId = await this.tagsDatabase.getTagsIdByName(imageTagsName);
+    console.log("tagId"); ////////
     if (!tagId) {
       throw new InvalidInputError("Invalid Tag");
     }
@@ -50,14 +51,14 @@ export class CreateImageBusiness {
       new Image(
         imageId,
         imgInputDatas.subtitle,
-        imgInputDatas.author,
+        verifyToken.id,
         imgInputDatas.createdDate,
         imgInputDatas.file,
-        imgInputDatas.collection,
-        verifyToken.id
+        imgInputDatas.collection
       )
     );
 
     await this.tagsDatabase.insertTagsToImage(imageId, tagId);
+    // console.log(imageTagsName, token, imgInputDatas); //////////////
   }
 }

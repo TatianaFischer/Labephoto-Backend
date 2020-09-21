@@ -13,14 +13,13 @@ var ImageTagsName;
     ImageTagsName["ORIENTAL"] = "#ORIENTAL";
 })(ImageTagsName = exports.ImageTagsName || (exports.ImageTagsName = {}));
 class Image {
-    constructor(id, subtitle, author, createdDate, file, collection, userId) {
+    constructor(id, subtitle, author, createdDate, file, collection) {
         this.id = id;
         this.subtitle = subtitle;
         this.author = author;
         this.createdDate = createdDate;
         this.file = file;
         this.collection = collection;
-        this.userId = userId;
     }
     //
     getId() {
@@ -42,7 +41,7 @@ class Image {
         return this.collection;
     }
     static toImageModel(image) {
-        return new Image(image.id, image.subtitle, image.author, image.createdDate, image.file, image.collection, image.userId);
+        return new Image(image.id, image.subtitle, image.author, image.createdDate, image.file, image.collection);
     }
 }
 exports.Image = Image;

@@ -23,19 +23,22 @@ exports.Authenticator = void 0;
 const jwt = __importStar(require("jsonwebtoken"));
 // import { SetupError } from "../error/SetupError";
 class Authenticator {
-    verifyToken(token) {
-        const data = jwt.verify(token, process.env.JWT_KEY);
-        return {
-            id: data.id,
-        };
-    }
     generateToken(dataInput, expiresIn = process.env.ACCESS_TOKEN_EXPIRES_IN) {
         const token = jwt.sign({
             id: dataInput.id,
         }, process.env.JWT_KEY, {
             expiresIn,
         });
+        console.log("generateToken", token); ///////////////////
         return token;
+    }
+    verifyToken(token) {
+        const data = jwt.verify(token, process.env.JWT_KEY);
+        const result = {
+            id: data.id,
+        };
+        console.log("verifyToken", data); /////////////
+        return result;
     }
 }
 exports.Authenticator = Authenticator;

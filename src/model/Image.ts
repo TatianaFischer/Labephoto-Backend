@@ -1,6 +1,5 @@
 export interface ImageInputDTO {
   subtitle: string;
-  author: string;
   createdDate: Date;
   file: string;
   collection: string;
@@ -28,8 +27,7 @@ export class Image {
     private author: string,
     private createdDate: Date,
     private file: string,
-    private collection: string,
-    private userId: string
+    private collection: string
   ) {}
 
   //
@@ -63,8 +61,7 @@ export class Image {
       image.author,
       image.createdDate,
       image.file,
-      image.collection,
-      image.userId
+      image.collection
     );
   }
 }

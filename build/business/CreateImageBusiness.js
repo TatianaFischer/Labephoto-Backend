@@ -23,25 +23,28 @@ class CreateImageBusiness {
     execute(imgInputDatas, imageTagsName, token) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!imgInputDatas.subtitle ||
-                !imgInputDatas.author ||
+                !imgInputDatas.createdDate ||
                 !imgInputDatas.file ||
-                imgInputDatas.collection) {
+                !imgInputDatas.collection) {
                 throw new InvalidInputError_1.InvalidInputError("Missing datas");
             }
             if (!token) {
                 throw new SetupError_1.SetupError("Invalid token");
             }
-            const verifyToken = this.authenticator.verifyToken(token);
+            const verifyToken = yield this.authenticator.verifyToken(token);
+            console.log("teste");
             if (!verifyToken.id) {
-                throw new InvalidInputError_1.InvalidInputError("Invalid Token");
+                throw new InvalidInputError_1.InvalidInputError("Invalid Id");
             }
+            // console.log(verifyToken.id); ///////////////////////////
             const tagId = yield this.tagsDatabase.getTagsById(imageTagsName);
             if (!tagId) {
                 throw new InvalidInputError_1.InvalidInputError("Invalid Tag");
             }
             const imageId = this.idGenerator.generate();
-            yield this.imageDatabase.createImg(new Image_1.Image(imageId, imgInputDatas.subtitle, imgInputDatas.author, imgInputDatas.createdDate, imgInputDatas.file, imgInputDatas.collection, verifyToken.id));
+            yield this.imageDatabase.createImg(new Image_1.Image(imageId, imgInputDatas.subtitle, verifyToken.id, imgInputDatas.createdDate, imgInputDatas.file, imgInputDatas.collection));
             yield this.tagsDatabase.insertTagsToImage(imageId, tagId);
+            // console.log(imageTagsName, token, imgInputDatas);//////////////
         });
     }
 }
