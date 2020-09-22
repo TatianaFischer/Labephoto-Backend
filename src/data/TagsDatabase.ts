@@ -8,7 +8,7 @@ export class TagsDatabase extends BaseDatabase {
         .select("id")
         .from(this.tableNames.tags)
         .whereIn("name", name);
-      console.log(tags); /////
+
       return tags;
     } catch (err) {
       throw new Error(err.sqlMessage || err.message);

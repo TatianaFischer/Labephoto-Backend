@@ -10,7 +10,6 @@ export class ImageDatabase extends BaseDatabase {
           id: image.getId(),
           subtitle: image.getSubtitle(),
           author: image.getAuthor(),
-
           file: image.getfile(),
           collection: image.getCollection(),
         })
@@ -22,10 +21,23 @@ export class ImageDatabase extends BaseDatabase {
 
   public async getAllImages(): Promise<Image[]> {
     try {
-      const imagesArray = await this.getConnection()
+      const result = await this.getConnection()
         .select("*")
         .from(this.tableNames.images);
-      return imagesArray;
+      return result;
+    } catch (err) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  }
+
+  public async getImageById(id: string): Promise<Image> {
+    try {
+      const result = await this.getConnection()
+        .select("*")
+        .from(this.tableNames.images)
+        .where({ id });
+
+      return Image.toImageModel(result[0]);
     } catch (err) {
       throw new Error(err.sqlMessage || err.message);
     }

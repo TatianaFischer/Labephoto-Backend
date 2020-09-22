@@ -6,5 +6,6 @@ const imageController = new ImageController();
 
 imageRouter.post("/", imageController.createImage);
 imageRouter.get("/feed", imageController.getImages);
+imageRouter.get("/:id", imageController.getImageById);
 
 export default imageRouter;

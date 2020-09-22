@@ -66,7 +66,7 @@ export class UserController {
         email: req.body.email,
         password: req.body.password,
       };
-      console.log(input); /////////
+
       const token = await loginBusiness.execute(input);
 
       if (!input.email || !input.password) {

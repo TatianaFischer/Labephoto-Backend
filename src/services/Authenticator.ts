@@ -13,7 +13,7 @@ export class Authenticator {
         expiresIn,
       }
     );
-    console.log("generateToken", token); ///////////////////
+
     return token;
   }
 
@@ -23,7 +23,7 @@ export class Authenticator {
     const result = {
       id: data.id,
     };
-    console.log("verifyToken", data); /////////////
+
     return result;
   }
 }

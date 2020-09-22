@@ -4,15 +4,15 @@ import { SetupError } from "../error/SetupError";
 import { Image } from "../model/Image";
 import { Authenticator } from "../services/Authenticator";
 
-export class GetImagesBusiness {
+export class GetImageByIdBusiness {
   constructor(
     private imageDatabase: ImageDatabase,
     private authenticator: Authenticator
   ) {}
 
-  public async execute(token: string): Promise<any> {
-    if (!token) {
-      throw new SetupError("Invalid token");
+  public async execute(id: string, token: string): Promise<Image> {
+    if (!id || !token) {
+      throw new SetupError("Invalid");
     }
 
     const verifyToken = this.authenticator.verifyToken(token);
@@ -21,8 +21,8 @@ export class GetImagesBusiness {
       throw new InvalidInputError("Invalid Token");
     }
 
-    const allImages: Image[] = await this.imageDatabase.getAllImages();
+    const image = await this.imageDatabase.getImageById(id);
 
-    return allImages;
+    return image;
   }
 }
