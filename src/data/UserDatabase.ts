@@ -2,14 +2,12 @@ import { BaseDatabase } from "./base/BaseDatabase";
 import { User } from "../model/User";
 
 export class UserDatabase extends BaseDatabase {
-  public async getUserByEmailOrNick(
-    email?: string,
-    nickname?: string
-  ): Promise<User> {
+  public async getUserByEmailOrNick(emailOrNick: string): Promise<User> {
     const user = await this.getConnection()
       .select("*")
       .from(this.tableNames.users)
-      .where({ email });
+      .where({ email: emailOrNick })
+      .orWhere({ nickname: emailOrNick });
 
     return User.toUserModel(user[0]);
   }
