@@ -22,7 +22,6 @@ export class CreateImageBusiness {
   ) {
     if (
       !imgInputDatas.subtitle ||
-      !imgInputDatas.date ||
       !imgInputDatas.file ||
       !imgInputDatas.collection
     ) {
@@ -33,15 +32,14 @@ export class CreateImageBusiness {
       throw new SetupError("Invalid token");
     }
 
-    const verifyToken = await this.authenticator.verifyToken(token);
+    const verifyToken = this.authenticator.verifyToken(token);
     console.log("teste");
     if (!verifyToken.id) {
       throw new InvalidInputError("Invalid Id");
     }
-    console.log("Business", verifyToken.id); ///////////////////////////
 
     const tagId = await this.tagsDatabase.getTagsIdByName(imageTagsName);
-    console.log("tagId"); ////////
+
     if (!tagId) {
       throw new InvalidInputError("Invalid Tag");
     }
@@ -52,7 +50,7 @@ export class CreateImageBusiness {
         imageId,
         imgInputDatas.subtitle,
         verifyToken.id,
-        imgInputDatas.date,
+
         imgInputDatas.file,
         imgInputDatas.collection
       )

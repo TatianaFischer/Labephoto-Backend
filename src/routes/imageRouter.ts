@@ -5,6 +5,6 @@ const imageRouter = Router();
 const imageController = new ImageController();
 
 imageRouter.post("/", imageController.createImage);
-// imageRouter.get("/:id", imageController.getMusic);
+imageRouter.get("/feed", imageController.getImages);
 
 export default imageRouter;
