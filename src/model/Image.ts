@@ -1,13 +1,13 @@
 export interface ImageInputDTO {
   subtitle: string;
-  date: Date;
+
   file: string;
   collection: string;
 }
 
 export interface TagsInputDTO {
   id: string;
-  name: ImageTagsName;
+  name: ImageTagsName[];
 }
 export enum ImageTagsName {
   OLEO = "#ÓLEO",
@@ -25,7 +25,7 @@ export class Image {
     private id: string,
     private subtitle: string,
     private author: string,
-    private date: Date,
+
     private file: string,
     private collection: string
   ) {}
@@ -43,10 +43,6 @@ export class Image {
     return this.author;
   }
 
-  public getDate() {
-    return this.date;
-  }
-
   public getfile() {
     return this.file;
   }
@@ -59,7 +55,7 @@ export class Image {
       image.id,
       image.subtitle,
       image.author,
-      image.date,
+
       image.file,
       image.collection
     );

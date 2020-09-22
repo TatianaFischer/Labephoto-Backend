@@ -10,11 +10,22 @@ export class ImageDatabase extends BaseDatabase {
           id: image.getId(),
           subtitle: image.getSubtitle(),
           author: image.getAuthor(),
-          date: image.getDate(),
+
           file: image.getfile(),
           collection: image.getCollection(),
         })
         .into(this.tableNames.images);
+    } catch (err) {
+      throw new Error(err.sqlMessage || err.message);
+    }
+  }
+
+  public async getAllImages(): Promise<Image[]> {
+    try {
+      const imagesArray = await this.getConnection()
+        .select("*")
+        .from(this.tableNames.images);
+      return imagesArray;
     } catch (err) {
       throw new Error(err.sqlMessage || err.message);
     }

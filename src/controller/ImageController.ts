@@ -5,21 +5,21 @@ import { TagsDatabase } from "../data/TagsDatabase";
 import { IdGenerator } from "../services/IdGenerator";
 import { Authenticator } from "../services/Authenticator";
 import { CreateImageBusiness } from "../business/CreateImageBusiness";
+import { GetImagesBusiness } from "../business/GetImagesBusiness";
 import { ImageInputDTO } from "../model/Image";
 
+const createImageBusiness = new CreateImageBusiness(
+  new ImageDatabase(),
+  new TagsDatabase(),
+  new IdGenerator(),
+  new Authenticator()
+);
 export class ImageController {
   public createImage = async (req: Request, res: Response) => {
     try {
-      const createImageBusiness = new CreateImageBusiness(
-        new ImageDatabase(),
-        new TagsDatabase(),
-        new IdGenerator(),
-        new Authenticator()
-      );
-
       const input: ImageInputDTO = {
         subtitle: req.body.subtitle,
-        date: req.body.date,
+
         file: req.body.file,
         collection: req.body.collection,
       };
@@ -37,6 +37,22 @@ export class ImageController {
       });
     } finally {
       await BaseDatabase.destroyConnection();
+    }
+  };
+
+  public getImages = async (req: Request, res: Response) => {
+    try {
+      const getImagesBusiness = new GetImagesBusiness(
+        new ImageDatabase(),
+        new Authenticator()
+      );
+      const token = req.headers.authorization as string;
+
+      const result = await getImagesBusiness.execute(token);
+
+      res.status(200).send({ result });
+    } catch (err) {
+      res.status(err.erroCode || 400).send({ message: err.message });
     }
   };
 }
