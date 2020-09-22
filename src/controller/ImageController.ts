@@ -7,6 +7,7 @@ import { Authenticator } from "../services/Authenticator";
 import { CreateImageBusiness } from "../business/CreateImageBusiness";
 import { GetImagesBusiness } from "../business/GetImagesBusiness";
 import { ImageInputDTO } from "../model/Image";
+import { GetImageByIdBusiness } from "../business/GetImageByIdBusiness";
 
 const createImageBusiness = new CreateImageBusiness(
   new ImageDatabase(),
@@ -54,5 +55,24 @@ export class ImageController {
     } catch (err) {
       res.status(err.erroCode || 400).send({ message: err.message });
     }
+  };
+
+  public getImageById = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const getImageByIdBusiness = new GetImageByIdBusiness(
+        new ImageDatabase(),
+        new Authenticator()
+      );
+
+      const id = req.params.id;
+      const token = req.headers.authorization as string;
+
+      const result = await getImageByIdBusiness.execute(id, token);
+
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(err.erroCode || 400).send({ message: err.message });
+    }
+    await BaseDatabase.destroyConnection();
   };
 }

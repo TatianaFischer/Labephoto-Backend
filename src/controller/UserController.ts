@@ -63,13 +63,13 @@ export class UserController {
         new HashManager()
       );
       const input = {
-        email: req.body.email,
+        emailOrNick: req.body.emailOrNick,
         password: req.body.password,
       };
-      console.log(input); /////////
+
       const token = await loginBusiness.execute(input);
 
-      if (!input.email || !input.password) {
+      if (!input.emailOrNick || !input.password) {
         throw new InvalidInputError("Missing data");
       }
 

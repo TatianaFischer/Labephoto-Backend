@@ -14,9 +14,10 @@ export class LoginBusiness {
     if (!input) {
       throw new Error("Missing datas");
     }
-    console.log("login"); ///////////
-    const user = await this.userDatabase.getUserByEmailOrNick(input.email);
-    console.log(user); //////////////
+
+    const user = await this.userDatabase.getUserByEmailOrNick(
+      input.emailOrNick
+    );
 
     const isPasswordRight = await this.hashManager.compare(
       input.password,
@@ -34,6 +35,6 @@ export class LoginBusiness {
 }
 
 export interface LoginBusinessInput {
-  email: string;
+  emailOrNick: string;
   password: string;
 }

@@ -33,7 +33,7 @@ export class CreateImageBusiness {
     }
 
     const verifyToken = this.authenticator.verifyToken(token);
-    console.log("teste");
+
     if (!verifyToken.id) {
       throw new InvalidInputError("Invalid Id");
     }
