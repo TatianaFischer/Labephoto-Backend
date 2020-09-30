@@ -22,9 +22,7 @@ class LoginBusiness {
             if (!input) {
                 throw new Error("Missing datas");
             }
-            console.log("login"); ///////////
-            const user = yield this.userDatabase.getUserByEmailOrNick(input.email);
-            console.log(user); //////////////
+            const user = yield this.userDatabase.getUserByEmailOrNick(input.emailOrNick);
             const isPasswordRight = yield this.hashManager.compare(input.password, user.getPassword());
             if (!isPasswordRight) {
                 throw new NotFoundError_1.NotFoundError("Invalid credentials");

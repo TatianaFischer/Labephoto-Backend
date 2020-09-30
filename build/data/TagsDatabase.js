@@ -19,7 +19,6 @@ class TagsDatabase extends BaseDatabase_1.BaseDatabase {
                     .select("id")
                     .from(this.tableNames.tags)
                     .whereIn("name", name);
-                console.log(tags); /////
                 return tags;
             }
             catch (err) {

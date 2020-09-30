@@ -57,12 +57,11 @@ class UserController {
             try {
                 const loginBusiness = new LoginBusiness_1.LoginBusiness(new UserDatabase_1.UserDatabase(), new HashManager_1.HashManager());
                 const input = {
-                    email: req.body.email,
+                    emailOrNick: req.body.emailOrNick,
                     password: req.body.password,
                 };
-                console.log(input); /////////
                 const token = yield loginBusiness.execute(input);
-                if (!input.email || !input.password) {
+                if (!input.emailOrNick || !input.password) {
                     throw new InvalidInputError_1.InvalidInputError("Missing data");
                 }
                 res.status(200).send({ message: "Sucess!:", token });

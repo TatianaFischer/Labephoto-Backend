@@ -5,5 +5,6 @@ const ImageController_1 = require("../controller/ImageController");
 const imageRouter = express_1.Router();
 const imageController = new ImageController_1.ImageController();
 imageRouter.post("/", imageController.createImage);
-// imageRouter.get("/:id", imageController.getMusic);
+imageRouter.get("/feed", imageController.getImages);
+imageRouter.get("/:id", imageController.getImageById);
 exports.default = imageRouter;

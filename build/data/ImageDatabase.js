@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageDatabase = void 0;
 const BaseDatabase_1 = require("./base/BaseDatabase");
+const Image_1 = require("../model/Image");
 class ImageDatabase extends BaseDatabase_1.BaseDatabase {
     createImg(image) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -20,12 +21,37 @@ class ImageDatabase extends BaseDatabase_1.BaseDatabase {
                     id: image.getId(),
                     subtitle: image.getSubtitle(),
                     author: image.getAuthor(),
-                    createdDate: image.getCreatedDate(),
                     file: image.getfile(),
                     collection: image.getCollection(),
                 })
                     .into(this.tableNames.images);
-                console.log("image"); ///////
+            }
+            catch (err) {
+                throw new Error(err.sqlMessage || err.message);
+            }
+        });
+    }
+    getAllImages() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.getConnection()
+                    .select("*")
+                    .from(this.tableNames.images);
+                return result;
+            }
+            catch (err) {
+                throw new Error(err.sqlMessage || err.message);
+            }
+        });
+    }
+    getImageById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.getConnection()
+                    .select("*")
+                    .from(this.tableNames.images)
+                    .where({ id });
+                return Image_1.Image.toImageModel(result[0]);
             }
             catch (err) {
                 throw new Error(err.sqlMessage || err.message);

@@ -14,7 +14,7 @@ app.use(cors_1.default({ origin: true }));
 app.use(express_1.default.json());
 app.use("/users", userRouter_1.default);
 app.use("/images", imageRouter_1.default);
-const server = app.listen(3003, () => {
+const server = app.listen(3001, () => {
     if (server) {
         const address = server.address();
         console.log(`Servidor rodando em http://localhost:${address.port}`);

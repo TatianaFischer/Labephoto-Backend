@@ -9,39 +9,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateImageBusiness = void 0;
-const Image_1 = require("../model/Image");
+exports.GetImagesBusiness = void 0;
 const InvalidInputError_1 = require("../error/InvalidInputError");
 const SetupError_1 = require("../error/SetupError");
-class CreateImageBusiness {
-    constructor(imageDatabase, tagsDatabase, idGenerator, authenticator) {
+class GetImagesBusiness {
+    constructor(imageDatabase, authenticator) {
         this.imageDatabase = imageDatabase;
-        this.tagsDatabase = tagsDatabase;
-        this.idGenerator = idGenerator;
         this.authenticator = authenticator;
     }
-    execute(imgInputDatas, imageTagsName, token) {
+    execute(token) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!imgInputDatas.subtitle ||
-                !imgInputDatas.file ||
-                !imgInputDatas.collection) {
-                throw new InvalidInputError_1.InvalidInputError("Missing datas");
-            }
             if (!token) {
                 throw new SetupError_1.SetupError("Invalid token");
             }
             const verifyToken = this.authenticator.verifyToken(token);
-            if (!verifyToken.id) {
-                throw new InvalidInputError_1.InvalidInputError("Invalid Id");
+            if (!verifyToken) {
+                throw new InvalidInputError_1.InvalidInputError("Invalid Token");
             }
-            const tagId = yield this.tagsDatabase.getTagsIdByName(imageTagsName);
-            if (!tagId) {
-                throw new InvalidInputError_1.InvalidInputError("Invalid Tag");
-            }
-            const imageId = this.idGenerator.generate();
-            yield this.imageDatabase.createImg(new Image_1.Image(imageId, imgInputDatas.subtitle, verifyToken.id, imgInputDatas.file, imgInputDatas.collection));
-            yield this.tagsDatabase.insertTagsToImage(imageId, tagId);
+            const allImages = yield this.imageDatabase.getAllImages();
+            return allImages;
         });
     }
 }
-exports.CreateImageBusiness = CreateImageBusiness;
+exports.GetImagesBusiness = GetImagesBusiness;

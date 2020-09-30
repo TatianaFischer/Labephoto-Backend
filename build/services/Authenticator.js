@@ -29,7 +29,6 @@ class Authenticator {
         }, process.env.JWT_KEY, {
             expiresIn,
         });
-        console.log("generateToken", token); ///////////////////
         return token;
     }
     verifyToken(token) {
@@ -37,7 +36,6 @@ class Authenticator {
         const result = {
             id: data.id,
         };
-        console.log("verifyToken", data); /////////////
         return result;
     }
 }
